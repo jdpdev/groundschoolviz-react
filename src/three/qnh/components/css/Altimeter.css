@@ -1,0 +1,46 @@
+.altimeter {
+    display: flex;
+    align-items: end;
+
+    position: fixed;
+    right: 60%;
+    bottom: 30%;
+}
+
+.altimeter-body {
+    width: 100px;
+    height: 100px;
+    background-color: #444;
+    border-radius: 50px;
+
+    position: relative;
+}
+
+.altimeter-arm {
+    width: 4px;
+    height: 44px;
+    background-color: #fff;
+
+    position: absolute;
+    bottom: 50px;
+    left: 48px;
+
+    transform-origin: bottom;
+}
+
+.altimeter-setting {
+    color: #fff;
+    font-weight: bold;
+    background-color: #222;
+    width: 60px;
+    height: 30px;
+    
+    display: flex;
+    align-items: center;
+
+    margin-left: -50px;
+    padding-left: 50px;
+
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
