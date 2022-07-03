@@ -9,6 +9,7 @@ import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 import { QNHSetting } from "./QNHSetting";
 import { Isobar } from "./Isobar";
+import { SceneryGenerator } from "../SceneryGenerator";
 
 export class QNHScene extends Scene {
     private _camera!: PerspectiveCamera;
@@ -21,6 +22,7 @@ export class QNHScene extends Scene {
 
     private _airplane: Airplane
     private _ground: GroundTile
+    private _scenery: SceneryGenerator
     private _qnh: QNHSetting
     private _isobar: Isobar
 
@@ -49,6 +51,10 @@ export class QNHScene extends Scene {
 
         this._ground = new GroundTile()
         this.add(this._ground)
+
+        this._scenery = new SceneryGenerator(2)
+        this._scenery.position.y = 0
+        this.add(this._scenery)
     }
 
     private setupCamera() {
@@ -108,6 +114,7 @@ export class QNHScene extends Scene {
 
     public tick(time: number, delta: number) {
         this._isobar.tick(delta)
+        this._scenery.tick(delta)
 
         this._airplane.tick(time, delta)
         this._airplane.position.y = this._qnh.currentAltitude
