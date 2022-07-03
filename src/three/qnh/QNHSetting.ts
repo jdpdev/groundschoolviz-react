@@ -12,6 +12,9 @@ const HIGH_MAX = 2
 
 export class QNHSetting {
     static COUNT = 61
+    static HIGH_PRESSURE = HIGH
+    static LOW_PRESSURE = LOW
+    static NORMAL_PRESSURE = ZERO
     
     private _pressureList: number[]
     private _qnh: number = ZERO

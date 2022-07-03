@@ -2,6 +2,8 @@ import React from 'react'
 import { QNHScene } from '../QNHScene'
 import { Altimeter } from './Altimeter'
 
+import './css/QNHLesson.css'
+
 interface Props {
     scene?: QNHScene
 }
@@ -12,11 +14,27 @@ export function QNHLesson({ scene }: Props) {
     }
 
     return (
-        <div>
+        <div className='qnh-lesson'>
             <Altimeter
-                setting={29.3}
-                altitude={0.3}
+                setting={scene.altimeterSetting}
+                altitude={scene.altitude}
             />
+            <div className='pressure-controls'>
+                <h4>Pressure</h4>
+                <div>
+                    <button onClick={() => scene.highPressure()}>
+                        High
+                    </button>
+
+                    <button onClick={() => scene.normalPressure()}>
+                        Starting
+                    </button>
+
+                    <button onClick={() => scene.lowPressure()}>
+                        Low
+                    </button>
+                </div>
+            </div>
         </div>
     )
 }

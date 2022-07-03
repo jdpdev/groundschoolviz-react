@@ -24,6 +24,14 @@ export class QNHScene extends Scene {
     private _qnh: QNHSetting
     private _isobar: Isobar
 
+    public get altimeterSetting() {
+        return this._qnh.setting
+    }
+
+    public get altitude() {
+        return 0.3
+    }
+
     constructor(private _renderer: WebGLRenderer) {
         super()
         this.background = new Color(0x00b7ff)
@@ -107,5 +115,17 @@ export class QNHScene extends Scene {
 
     public fixedTick(time: number, delta: number) {
         this._qnh.tick(time, delta)
+    }
+
+    public highPressure() {
+        this._qnh.moveToPressure(QNHSetting.HIGH_PRESSURE, () => {})
+    }
+
+    public normalPressure() {
+        this._qnh.moveToPressure(QNHSetting.NORMAL_PRESSURE, () => {})
+    }
+
+    public lowPressure() {
+        this._qnh.moveToPressure(QNHSetting.LOW_PRESSURE, () => {})
     }
 }

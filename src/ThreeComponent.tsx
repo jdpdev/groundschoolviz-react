@@ -28,7 +28,6 @@ function useThreeJSApp() {
     const [props, setProps] = useState<ThreeProps>({})
     const rendererRef = useRef<Renderer | null>(null)
     const controlsRef = useRef<OrbitControls | null>(null)
-    console.log('[useThreeJSApp]', rendererRef.current)
 
     useEffect(() => {
         if (rendererRef.current != null) {
