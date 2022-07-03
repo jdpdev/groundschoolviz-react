@@ -1,12 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { ThreeComponent } from './ThreeComponent';
+import React from 'react'
+import './App.css'
+import { QNHLesson } from './three/qnh/components/QNHLesson';
+import { ThreeComponent } from './ThreeComponent'
 
 function App() {
   return (
     <div className="App">
-      <ThreeComponent />
+      <ThreeComponent>
+        {
+          (scene) => <QNHLesson scene={scene} />
+        }
+      </ThreeComponent>
     </div>
   );
 }

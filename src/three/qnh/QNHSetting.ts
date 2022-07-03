@@ -58,7 +58,6 @@ export class QNHSetting {
     }
 
     public tick(time: number, delta: number) {
-        console.log(delta)
         const next = this._isChangingPressure ? this.chaseTargetPressure(delta) : this._pressureList[0]
         this._pressureList.pop()
         this._pressureList.unshift(next)
@@ -69,7 +68,6 @@ export class QNHSetting {
         
         const time = this._targetChangeTime / this._targetChangeRate
         const next = smoothstep(time, 0, 1) * (this._targetPressure - this._targetChangeStart) + this._targetChangeStart
-        console.log(time, this._targetChangeStart, this._targetPressure, next)
         this._targetChangeTime += delta
 
         if (time >= 1) {

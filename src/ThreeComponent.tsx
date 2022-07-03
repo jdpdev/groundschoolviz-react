@@ -1,59 +1,97 @@
-import React, { useEffect } from 'react'
-import { Clock, PCFShadowMap, WebGLRenderer } from 'three'
+import React, { useEffect, useRef, useState } from 'react'
+import { Clock, PCFShadowMap, Renderer, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { QNHScene } from './three/qnh/QNHScene'
 
-export function ThreeComponent() {
-    useEffect(() => {
-        intializeApp()
-    }, [])
-
-    return <div id='three-component' />
+interface Props {
+    children?: (scene?: QNHScene) => JSX.Element
 }
 
-function intializeApp() {
-    const renderer = new WebGLRenderer()
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = PCFShadowMap
-    document.body.appendChild(renderer.domElement)
+export function ThreeComponent({ children }: Props) {
+    console.log('[ThreeComponent]')
+    const { scene } = useThreeJSApp()
 
-    const scene = new QNHScene(renderer)
-    const controls = new OrbitControls(scene.camera, renderer.domElement)
-    const clock = new Clock()
+    return (
+        <div id='three-component'>
+            { children?.(scene) }
+        </div>
+    )
+}
 
-    window.addEventListener('resize', onWindowResize, false)
-    function onWindowResize() {
-        scene.camera.aspect = window.innerWidth / window.innerHeight
-        scene.camera.updateProjectionMatrix()
-        renderer.setSize(window.innerWidth, window.innerHeight)
-        render()
-    }
+type ThreeProps = {
+    renderer?: WebGLRenderer,
+    scene?: QNHScene,
+    clock?: Clock
+}
 
-    let lastFixedTick = 0
+function useThreeJSApp() {
+    const [props, setProps] = useState<ThreeProps>({})
+    const rendererRef = useRef<Renderer | null>(null)
+    const controlsRef = useRef<OrbitControls | null>(null)
+    console.log('[useThreeJSApp]', rendererRef.current)
 
-    function animate() {
-        requestAnimationFrame(animate)
-
-        //cube.rotation.x += 0.01
-        //cube.rotation.y += 0.01
-
-        //controls.update()
-
-        const delta = clock.getDelta()
-        scene.tick(clock.elapsedTime, delta)
-
-        var fdelta = clock.elapsedTime - lastFixedTick
-        if (fdelta > 0.03) {
-            scene.fixedTick(clock.elapsedTime, fdelta)
-            lastFixedTick = clock.elapsedTime
+    useEffect(() => {
+        if (rendererRef.current != null) {
+            console.warn('trying to make a second renderer')
+            return
         }
 
-        render()
-    }
+        const _renderer = new WebGLRenderer()
+        const _scene = new QNHScene(_renderer)
+        console.log(_renderer.domElement)
+        const _clock = new Clock()
 
-    function render() {
-        renderer.render(scene, scene.camera)
-    }
-    animate()
+        _renderer.setSize(window.innerWidth, window.innerHeight)
+        _renderer.shadowMap.enabled = true
+        _renderer.shadowMap.type = PCFShadowMap
+
+        document.body.appendChild(_renderer.domElement)
+        
+        window.addEventListener('resize', onWindowResize, false)
+        function onWindowResize() {
+            _scene.camera.aspect = window.innerWidth / window.innerHeight
+            _scene.camera.updateProjectionMatrix()
+            _renderer.setSize(window.innerWidth, window.innerHeight)
+            render()
+        }
+
+        let lastFixedTick = 0
+
+        function animate() {
+            requestAnimationFrame(animate)
+
+            const delta = _clock.getDelta()
+            _scene.tick(_clock.elapsedTime, delta)
+
+            var fdelta = _clock.elapsedTime - lastFixedTick
+            if (fdelta > 0.03) {
+                _scene.fixedTick(_clock.elapsedTime, fdelta)
+                lastFixedTick = _clock.elapsedTime
+            }
+
+            render()
+        }
+
+        function render() {
+            _renderer.render(_scene, _scene.camera)
+        }
+        animate()
+
+        setProps({
+            renderer: _renderer,
+            scene: _scene,
+            clock: _clock
+        })
+        rendererRef.current = _renderer
+    }, [])
+
+    useEffect(() => {
+        if (props.renderer == null || controlsRef.current != null) {
+            return
+        }
+
+        controlsRef.current = new OrbitControls(props.scene!.camera, props.renderer.domElement)
+    }, [props])
+
+    return props
 }
