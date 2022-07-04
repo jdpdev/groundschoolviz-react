@@ -7,7 +7,7 @@ export class QNHSetting {
 
     private _pressure: number = QNHSetting.NORMAL_PRESSURE
     private _temperature: number = 0
-    private _setting: number = 29.9
+    private _setting: number = 29
 
     private _changePressure: ChangePressure | null = null
     

@@ -3,7 +3,8 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
 import { randFloat, randInt } from "three/src/math/MathUtils"
 
 export class SceneryGenerator extends Object3D {
-    private _trees: Object3D[] = []
+    private _treeMeshes: Object3D[] = []
+    private _treePool: Object3D[] = []
     private _aliveTrees: Object3D[] = []
 
     constructor(radius: number) {
@@ -31,7 +32,14 @@ export class SceneryGenerator extends Object3D {
                 meshes.push(mesh)
             })
 
-            this._trees = meshes
+            this._treeMeshes = meshes
+
+            for (let i = 0; i < 50; i++) {
+                const index = 0 //randInt(0, this._trees.length - 1)
+                const mesh = this._treeMeshes[index].clone()
+
+                this._treePool.push(mesh)
+            }
 
             for (let i = 0; i < 10; i++) {
                 this.instantiateTree(randFloat(-0.75, 0.75))
@@ -40,8 +48,8 @@ export class SceneryGenerator extends Object3D {
     }
 
     private instantiateTree(x: number = 1) {
-        const index = 0 //randInt(0, this._trees.length - 1)
-        const mesh = this._trees[index].clone()
+        const index = randInt(0, this._treePool.length - 1)
+        const mesh = this._treePool[index]
                 
         mesh.position.x = x
         mesh.position.z = randFloat(-0.95, 0.95)
@@ -52,6 +60,7 @@ export class SceneryGenerator extends Object3D {
 
         this.add(mesh)
         this._aliveTrees.push(mesh)
+        this._treePool.splice(index, 1)
     }
 
     public tick(delta: number) {
@@ -70,6 +79,7 @@ export class SceneryGenerator extends Object3D {
             const index = this._aliveTrees.indexOf(t)
             this.remove(t)
             this._aliveTrees.splice(index, 1)
+            this._treePool.push(t)
         })
 
         if (Math.random() > 0.9925) {
