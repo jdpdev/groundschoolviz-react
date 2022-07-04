@@ -34,7 +34,7 @@ export class QNHScene extends Scene {
     }
 
     public get altitude() {
-        return 0.3
+        return 0.24601
     }
 
     constructor(private _renderer: WebGLRenderer) {

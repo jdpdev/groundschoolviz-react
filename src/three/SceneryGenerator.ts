@@ -48,6 +48,10 @@ export class SceneryGenerator extends Object3D {
     }
 
     private instantiateTree(x: number = 1) {
+        if (this._treePool.length === 0) {
+            return
+        }
+
         const index = randInt(0, this._treePool.length - 1)
         const mesh = this._treePool[index]
                 
