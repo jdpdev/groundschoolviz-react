@@ -4,7 +4,7 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js'
 import { LineGeometry } from 'three/examples/jsm/lines/LineGeometry.js'
 import { Line2 } from 'three/examples/jsm/lines/Line2.js'
 
-export class Isobar extends Object3D {
+export class LiveIsobar extends Object3D {
     private _line: LineGeometry
     private _points: number[]
 

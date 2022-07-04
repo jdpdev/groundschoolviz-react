@@ -18,4 +18,11 @@
     color: white;
     background-color: #005476;
 
+    cursor: pointer;
+
+    transition: background-color 0.2s;
+}
+
+.pressure-controls button:hover {
+    background-color: #008ac3;
 }

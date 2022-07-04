@@ -8,8 +8,9 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
 import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 import { QNHSetting } from "./QNHSetting";
-import { Isobar } from "./Isobar";
+import { LiveIsobar } from "./LiveIsobar";
 import { SceneryGenerator } from "../SceneryGenerator";
+import { SideIsobar } from "./SideIsobar";
 
 export class QNHScene extends Scene {
     private _camera!: PerspectiveCamera;
@@ -24,7 +25,9 @@ export class QNHScene extends Scene {
     private _ground: GroundTile
     private _scenery: SceneryGenerator
     private _qnh: QNHSetting
-    private _isobar: Isobar
+
+    private _isobar: LiveIsobar
+    private _sideIsobars: SideIsobar[]
 
     public get altimeterSetting() {
         return this._qnh.setting
@@ -43,7 +46,7 @@ export class QNHScene extends Scene {
         this.setupEffects()
 
         this._qnh = new QNHSetting()
-        this._isobar = new Isobar(this._qnh)
+        this._isobar = new LiveIsobar(this._qnh)
 
         this._airplane = new Airplane()
         this._airplane.position.y = this._qnh.currentAltitude
@@ -55,6 +58,17 @@ export class QNHScene extends Scene {
         this._scenery = new SceneryGenerator(2)
         this._scenery.position.y = 0
         this.add(this._scenery)
+
+        this._sideIsobars = [
+            new SideIsobar(this._qnh, 26),
+            new SideIsobar(this._qnh, 27),
+            new SideIsobar(this._qnh, 28),
+            new SideIsobar(this._qnh, 29),
+            new SideIsobar(this._qnh, 30),
+            new SideIsobar(this._qnh, 31),
+            new SideIsobar(this._qnh, 32)
+        ]
+        this._sideIsobars.forEach(si => this.add(si))
     }
 
     private setupCamera() {
@@ -115,6 +129,7 @@ export class QNHScene extends Scene {
     public tick(time: number, delta: number) {
         this._isobar.tick(delta)
         this._scenery.tick(delta)
+        this._sideIsobars.forEach(si => si.tick(delta))
 
         this._airplane.tick(time, delta)
         this._airplane.position.y = this._qnh.currentAltitude
