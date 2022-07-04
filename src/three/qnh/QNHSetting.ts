@@ -1,98 +1,86 @@
-import { damp, lerp, smoothstep } from "three/src/math/MathUtils"
-
-const ZERO = 29.3
-const LOW = 28
-const HIGH = 31
-
-const LOW_MIN = 0.25
-const LOW_MAX = 1
-
-const HIGH_MIN = 0.5
-const HIGH_MAX = 2
+import { lerp, smoothstep } from "three/src/math/MathUtils"
 
 export class QNHSetting {
-    static COUNT = 61
-    static HIGH_PRESSURE = HIGH
-    static LOW_PRESSURE = LOW
-    static NORMAL_PRESSURE = ZERO
+    static LOW_PRESSURE = 28
+    static NORMAL_PRESSURE = 29
+    static HIGH_PRESSURE = 30
+
+    private _pressure: number = QNHSetting.NORMAL_PRESSURE
+    private _temperature: number = 0
+    private _setting: number = 29.9
+
+    private _changePressure: ChangePressure | null = null
     
-    private _pressureList: number[]
-    private _qnh: number = ZERO
-
-    private _isChangingPressure = false
-    private _targetChangeStart: number = 0
-    private _targetPressure: number = ZERO
-    private _targetChangeRate: number = 0
-    private _targetChangeTime: number = 0
-    private _onChangeDone: (() => void) | null = null
-
     public get setting() {
-        return this._qnh
+        return this._setting
     }
 
-    public get qnhList(): number[] {
-        return this._pressureList
-    }
-    
-    public get current(): number {
-        return this._pressureList[(QNHSetting.COUNT - 1) / 2]
-    }
-
-    public get currentAltitude(): number {
-        return this.heightAtSetting(this.current, this.setting)
+    public get currentAltitude() {
+        return this.getPressureAltitude(26)
     }
 
     constructor() {
-        this._pressureList = new Array(QNHSetting.COUNT)
-        this._pressureList.fill(ZERO)
-    }
 
-    public getSettingAtIndex(index: number): number {
-        return this._pressureList[index]
-    }
-
-    public moveToPressure(pressure: number, onDone: () => void, rate: number = 2) {
-        this._targetPressure = pressure
-        this._targetChangeStart = this._pressureList[0]
-        this._targetChangeRate = rate
-        this._targetChangeTime = 0
-        this._onChangeDone = onDone
-        this._isChangingPressure = true
     }
 
     public tick(time: number, delta: number) {
-        const next = this._isChangingPressure ? this.chaseTargetPressure(delta) : this._pressureList[0]
-        this._pressureList.pop()
-        this._pressureList.unshift(next)
+        if (this._changePressure) {
+            this._pressure = this._changePressure.step(delta)
+        }
     }
 
-    private chaseTargetPressure(delta: number) {
-        const prev = this._pressureList[0]
-        
-        const time = this._targetChangeTime / this._targetChangeRate
-        const next = smoothstep(time, 0, 1) * (this._targetPressure - this._targetChangeStart) + this._targetChangeStart
-        this._targetChangeTime += delta
+    public moveToPressure(pressure: number, onDone: () => void) {
+        const callback = () => {
+            onDone()
+            this._changePressure = null
+        }
+        this._changePressure = new ChangePressure(this._pressure, pressure, 1, callback)
+    }
 
-        if (time >= 1) {
-            this._isChangingPressure = false
-            this._onChangeDone?.()
+    /**
+     * The altitude of a given pressure reading
+     * @param pressure 
+     * @returns The pressure altitude
+     */
+    public getPressureAltitude(pressure: number): number {
+        return (this._pressure - pressure) * this.getLapseRate()
+    }
+
+    /**
+     * Altitude per unit pressure
+     */
+    private getLapseRate(): number {
+        return 0.35
+    }
+}
+
+class ChangePressure {
+    private _elapsedTime: number = 0
+    private _isDone: boolean = false
+    public get isDone() { return this._isDone }
+
+    constructor(
+        private _from: number,
+        private _to: number,
+        private _duration: number,
+        private _callback: () => void
+    ) {
+
+    }
+
+    public step(delta: number) {
+        if (this._isDone) {
+            return this._to
         }
 
-        return next
-    }
+        this._elapsedTime += delta
 
-    public heightAtSetting(pressure: number, qnh: number) {
-        const altRange = this.getPressureAltRange(pressure)
-        const frac = this.getPressureFraction(qnh)
-        return lerp(altRange[0], altRange[1], frac)
-    }
+        if (this._elapsedTime >= this._duration) {
+            this._isDone = true
+            this._callback()
+            return this._to
+        }
 
-    private getPressureFraction(p: number) {
-        return (p - LOW) / (HIGH - LOW)
-    }
-
-    private getPressureAltRange(p: number) {
-        const frac = this.getPressureFraction(p)
-        return [ lerp(LOW_MIN, HIGH_MIN, frac), lerp(LOW_MAX, HIGH_MAX, frac) ]
+        return (smoothstep(this._elapsedTime / this._duration, 0, 1) * (this._to - this._from)) + this._from
     }
 }

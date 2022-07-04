@@ -60,6 +60,9 @@ export class QNHScene extends Scene {
         this.add(this._scenery)
 
         this._sideIsobars = [
+            new SideIsobar(this._qnh, 23),
+            new SideIsobar(this._qnh, 24),
+            new SideIsobar(this._qnh, 25),
             new SideIsobar(this._qnh, 26),
             new SideIsobar(this._qnh, 27),
             new SideIsobar(this._qnh, 28),

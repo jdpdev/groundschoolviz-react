@@ -13,8 +13,8 @@ export class SideIsobar extends Object3D {
 
         this._line = new LineGeometry()
         this._points = [
-            1, this._qnh.heightAtSetting(_pressure, this._qnh.setting), 0, 
-            -1, this._qnh.heightAtSetting(_pressure, this._qnh.setting), 0
+            1, this._qnh.getPressureAltitude(_pressure), 0, 
+            -1, this._qnh.getPressureAltitude(_pressure), 0
         ]
 
         this._line.setPositions(this._points)
@@ -31,8 +31,8 @@ export class SideIsobar extends Object3D {
     }
 
     public tick(delta: number) {
-        this._points[1] = this._qnh.heightAtSetting(this._pressure, this._qnh.setting)
-        this._points[4] = this._qnh.heightAtSetting(this._pressure, this._qnh.setting)
+        this._points[1] = this._qnh.getPressureAltitude(this._pressure)
+        this._points[4] = this._qnh.getPressureAltitude(this._pressure)
 
         this._line.setPositions(this._points)
     }
