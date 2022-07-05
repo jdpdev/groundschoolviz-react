@@ -1,4 +1,4 @@
-import { AmbientLight, Camera, Color, DirectionalLight, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { AmbientLight, Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { Airplane } from "../Airplane";
 import { GroundTile } from "../GroundTile";
 
@@ -27,6 +27,7 @@ export class QNHScene extends Scene {
     private _qnh: QNHSetting
 
     private _isobar: LiveIsobar
+    private _isobarWall: Object3D
     private _sideIsobars: SideIsobar[]
 
     public get altimeterSetting() {
@@ -43,7 +44,7 @@ export class QNHScene extends Scene {
 
         this.setupCamera()
         this.setupLights()
-        this.setupEffects()
+        //this.setupEffects()
 
         this._qnh = new QNHSetting()
         this._isobar = new LiveIsobar(this._qnh)
@@ -55,9 +56,13 @@ export class QNHScene extends Scene {
         this._ground = new GroundTile()
         this.add(this._ground)
 
-        this._scenery = new SceneryGenerator(2)
+        this._scenery = new SceneryGenerator(1)
         this._scenery.position.y = 0
         this.add(this._scenery)
+
+        this._isobarWall = new Object3D()
+        this._isobarWall.position.set(0, 0, 0)
+        this.add(this._isobarWall)
 
         this._sideIsobars = [
             new SideIsobar(this._qnh, 23),
@@ -71,7 +76,7 @@ export class QNHScene extends Scene {
             new SideIsobar(this._qnh, 31),
             new SideIsobar(this._qnh, 32)
         ]
-        this._sideIsobars.forEach(si => this.add(si))
+        this._sideIsobars.forEach(si => this._isobarWall.add(si))
     }
 
     private setupCamera() {
@@ -130,7 +135,7 @@ export class QNHScene extends Scene {
     }
 
     public tick(time: number, delta: number) {
-        this._isobar.tick(delta)
+        //this._isobar.tick(delta)
         this._scenery.tick(delta)
         this._sideIsobars.forEach(si => si.tick(delta))
 
