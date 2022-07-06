@@ -5,6 +5,7 @@ import { Altimeter } from './Altimeter'
 
 import './css/QNHLesson.css'
 import { QNHIntroduction } from './Introduction'
+import { TitleCard } from './TitleCard'
 
 interface Props {
     scene?: QNHScene
@@ -12,7 +13,7 @@ interface Props {
 
 export function QNHLesson({ scene }: Props) {
     const [layoutSlots, setLayoutSlots] = useState({
-        [LayoutSlot.Modal]: <QNHIntroduction />
+        [LayoutSlot.Modal]: <TitleCard />
     })
 
     if (scene == null) {
