@@ -11,6 +11,8 @@ import { QNHSetting } from "./QNHSetting";
 import { LiveIsobar } from "./LiveIsobar";
 import { SceneryGenerator } from "../SceneryGenerator";
 import { SideIsobar } from "./SideIsobar";
+import { LessonScript } from "../LessonScript";
+import { QNHLessonScript } from "../QNHLessonScript";
 
 export class QNHScene extends Scene {
     private _camera!: PerspectiveCamera;

@@ -4,11 +4,16 @@ import { createPortal } from 'react-dom'
 import './css/Modal.css'
 
 interface Props {
-    children: ReactNode
+    children: ReactNode,
+    show: boolean
 }
 
-export function Modal({ children }: Props) {
+export function Modal({ children, show }: Props) {
     const portal = useMemo(() => document.getElementById('app-portal'), [])
+
+    if (!show) {
+        return null
+    }
 
     return createPortal(
         <div className='modal-container'>

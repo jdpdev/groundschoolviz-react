@@ -4,7 +4,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { QNHScene } from './three/qnh/QNHScene'
 
 interface Props {
-    children?: (scene?: QNHScene) => JSX.Element
+    children: (scene: QNHScene) => JSX.Element
 }
 
 export function ThreeComponent({ children }: Props) {
@@ -13,7 +13,7 @@ export function ThreeComponent({ children }: Props) {
 
     return (
         <div id='three-component' style={{height: '100%'}}>
-            { children?.(scene) }
+            { scene != null && children(scene) }
         </div>
     )
 }

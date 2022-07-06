@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { Modal } from '../ui/Modal'
 
 import './css/PageLayout.css'
+import { LessonDialogProps } from './LessonScript'
 
 export enum LayoutSlot {
     Top = 'layout-top',
@@ -9,44 +10,61 @@ export enum LayoutSlot {
     Modal = 'layout-modal'
 }
 
-type SetInLayoutType = (content: JSX.Element, slot: LayoutSlot) => void
+type SetInLayoutType = (content: React.FC<LessonDialogProps>, slot: LayoutSlot) => void
 
 type RenderProp = (
     setInLayout: SetInLayoutType
-) => JSX.Element
+) => React.FC<LessonDialogProps>
 
 export interface LayoutSlots {
-    [LayoutSlot.Top]?: JSX.Element,
-    [LayoutSlot.Bottom]?: JSX.Element,
-    [LayoutSlot.Modal]?: JSX.Element
+    [LayoutSlot.Top]?: ReactElement,
+    [LayoutSlot.Bottom]?: ReactElement,
+    [LayoutSlot.Modal]?: ReactElement
 }
 
 interface Props {
-    children?: JSX.Element,
-    slots: LayoutSlots
+    children?: ReactElement
 }
 
 /**
  * Defines the various slots available to place popups in
  */
 export function PageLayout(props: Props) {
-    const { children, slots } = props
+    const { children } = props
 
     return (
         <div className='layout-container'>
-            <div className='slot-top'>
-                { slots[LayoutSlot.Top] }
-            </div>
-
             <div className='base-content'>
                 { children }
             </div>
-
-            <div className='slot-bottom'>
-                { slots[LayoutSlot.Bottom] }
-            </div>
-
-            { slots[LayoutSlot.Modal] && <Modal>{ slots[LayoutSlot.Modal]! }</Modal> }
         </div>
+    )
+}
+
+interface SlotProps {
+    children?: ReactElement
+}
+
+export function PageLayoutTopSlot({ children }: SlotProps) {
+    return (
+        <div className='slot-top'>
+            { children }
+        </div>
+    )
+}
+
+export function PageLayoutBottomSlot({ children }: SlotProps) {
+    return (
+        <div className='slot-bottom'>
+            { children }
+        </div>
+    )
+}
+
+export function PageLayoutModalSlot({ children }: SlotProps) {
+    return (
+        <Modal show={children != null}>
+            { children }
+        </Modal>
     )
 }
