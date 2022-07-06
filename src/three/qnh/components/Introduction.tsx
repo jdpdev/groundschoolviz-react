@@ -1,9 +1,12 @@
 import React from 'react'
+import { DialogBox } from '../../../ui/DialogBox'
 
 export function QNHIntroduction() {
     return (
-        <div>
-            Let's talk about altimeter settings
-        </div>
+        <DialogBox>
+            <>
+                Let's talk about altimeter settings
+            </>
+        </DialogBox>
     )
 }

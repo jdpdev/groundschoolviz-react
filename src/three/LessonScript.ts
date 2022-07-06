@@ -3,8 +3,12 @@ import { QNHScene } from "./qnh/QNHScene";
 export class LessonScript {
     private _steps: LessonStep[] = []
 
-    constructor(private _scene: QNHScene) {
+    constructor(protected _scene: QNHScene) {
 
+    }
+
+    protected addStep(step: LessonStep) {
+        this._steps.push(step)
     }
 }
 
@@ -18,5 +22,11 @@ export class LessonStep {
     public activate() {
         this._action(this._scene)
         return this._component
+    }
+}
+
+export class QNHLessonScript extends LessonScript {
+    constructor(scene: QNHScene) {
+        super(scene)
     }
 }

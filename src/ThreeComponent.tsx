@@ -12,7 +12,7 @@ export function ThreeComponent({ children }: Props) {
     const { scene } = useThreeJSApp()
 
     return (
-        <div id='three-component'>
+        <div id='three-component' style={{height: '100%'}}>
             { children?.(scene) }
         </div>
     )
