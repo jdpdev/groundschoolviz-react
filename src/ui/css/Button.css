@@ -1,0 +1,10 @@
+.standard-button {
+    padding: 0.5em;
+    background-color: #009bd8;
+    border: 0;
+    border-radius: 4px;
+    font-size: 1em;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}

@@ -1,10 +1,10 @@
-import React, { useMemo } from 'react'
+import React, { ReactNode, useMemo } from 'react'
 import { createPortal } from 'react-dom'
 
 import './css/Modal.css'
 
 interface Props {
-    children: JSX.Element
+    children: ReactNode
 }
 
 export function Modal({ children }: Props) {

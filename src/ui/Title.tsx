@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 interface Props {
-    children: JSX.Element | string
+    children: ReactNode
 }
 
 export function Title({ children }: Props) {

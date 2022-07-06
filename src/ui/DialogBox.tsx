@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import './css/DialogBox.css'
 
 interface Props {
-    children: JSX.Element
+    children: ReactNode
 }
 
 export function DialogBox({ children }: Props) {
