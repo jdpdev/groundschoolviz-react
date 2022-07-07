@@ -16,7 +16,7 @@ export class QNHSetting {
     }
 
     public get currentAltitude() {
-        return this.getPressureAltitude(26)
+        return this.getPressureAltitude(26.34)
     }
 
     constructor() {

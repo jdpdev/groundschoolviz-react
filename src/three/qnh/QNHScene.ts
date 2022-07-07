@@ -13,6 +13,7 @@ import { SceneryGenerator } from "../SceneryGenerator";
 import { SideIsobar } from "./SideIsobar";
 import { LessonScript } from "../LessonScript";
 import { QNHLessonScript } from "../QNHLessonScript";
+import { AirplaneIsobar } from "./AirplaneIsobar";
 
 export class QNHScene extends Scene {
     private _camera!: PerspectiveCamera;
@@ -31,6 +32,7 @@ export class QNHScene extends Scene {
     private _isobar: LiveIsobar
     private _isobarWall: Object3D
     private _sideIsobars: SideIsobar[]
+    private _airplaneIsobar: AirplaneIsobar
 
     public get altimeterSetting() {
         return this._qnh.setting
@@ -65,6 +67,9 @@ export class QNHScene extends Scene {
         this._isobarWall = new Object3D()
         this._isobarWall.position.set(0, 0, 0)
         //this.add(this._isobarWall)
+
+        this._airplaneIsobar = new AirplaneIsobar(this._qnh, this._airplane)
+        this._isobarWall.add(this._airplaneIsobar)
 
         this._sideIsobars = [
             new SideIsobar(this._qnh, 23),
@@ -140,6 +145,7 @@ export class QNHScene extends Scene {
         //this._isobar.tick(delta)
         this._scenery.tick(delta)
         this._sideIsobars.forEach(si => si.tick(delta))
+        this._airplaneIsobar.tick(delta)
 
         this._airplane.tick(time, delta)
         this._airplane.position.y = this._qnh.currentAltitude

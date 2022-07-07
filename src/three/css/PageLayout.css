@@ -13,12 +13,15 @@
 .slot-top {
     top: 1em;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .slot-bottom {
     bottom: 1em;
-    align-items: center;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 @media screen and (max-width: 768px) {
