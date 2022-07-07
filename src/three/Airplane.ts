@@ -39,6 +39,6 @@ export class Airplane extends Object3D {
         this._mesh.position.z = Math.sin(time) * 0.04
         this._mesh.position.y = Math.sin(time * 1.3) * 0.01
 
-        this._mesh.rotateX(this._mesh.position.z / -120)
+        this._mesh.rotation.x = this._mesh.position.z
     }
 }
