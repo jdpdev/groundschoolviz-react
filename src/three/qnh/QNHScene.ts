@@ -155,16 +155,25 @@ export class QNHScene extends Scene {
         this._qnh.tick(time, delta)
     }
 
-    public highPressure() {
-        this._qnh.moveToPressure(QNHSetting.HIGH_PRESSURE, () => {})
+    public async highPressure() {
+        return new Promise<void>((resolve, reject) => {
+            this._qnh.moveToPressure(QNHSetting.HIGH_PRESSURE, () => {
+                console.log('[highPressure] done')
+                resolve()
+            })
+        })
     }
 
-    public normalPressure() {
-        this._qnh.moveToPressure(QNHSetting.NORMAL_PRESSURE, () => {})
+    public async normalPressure() {
+        return new Promise<void>((resolve, reject) => {
+            this._qnh.moveToPressure(QNHSetting.NORMAL_PRESSURE, resolve)
+        })
     }
 
-    public lowPressure() {
-        this._qnh.moveToPressure(QNHSetting.LOW_PRESSURE, () => {})
+    public async lowPressure() {
+        return new Promise<void>((resolve, reject) => {
+            this._qnh.moveToPressure(QNHSetting.LOW_PRESSURE, resolve)
+        })
     }
 
     public toggleIsobars() {

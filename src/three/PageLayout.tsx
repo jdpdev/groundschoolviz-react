@@ -47,17 +47,25 @@ interface SlotProps {
 }
 
 export function PageLayoutTopSlot({ children, show }: SlotProps) {
+    if (show === false) {
+        return null
+    }
+    
     return (
         <div className='slot-top'>
-            { show !== false && children }
+            { children }
         </div>
     )
 }
 
 export function PageLayoutBottomSlot({ children, show }: SlotProps) {
+    if (show === false) {
+        return null
+    }
+    
     return (
         <div className='slot-bottom'>
-            { show !== false && children }
+            { children }
         </div>
     )
 }
@@ -71,9 +79,13 @@ export function PageLayoutModalSlot({ children, show }: SlotProps) {
 }
 
 export function PageLayoutOverlay({ children, show }: SlotProps) {
+    if (show === false) {
+        return null
+    }
+    
     return (
         <div className='slot-overlay'>
-            { show !== false && children }
+            { children }
         </div>
     )
 }

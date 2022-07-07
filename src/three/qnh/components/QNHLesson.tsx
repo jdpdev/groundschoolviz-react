@@ -7,6 +7,7 @@ import { Altimeter } from './Altimeter'
 import './css/QNHLesson.css'
 import { QNHIntroduction } from './Introduction'
 import { QNHAltimeter } from './QNHAltimeter'
+import { QNHChangingPressure } from './QNHChangingPressure'
 import { QNHPressureAltitude } from './QNHPressureAltitude'
 import { QNHTitleCard } from './TitleCard'
 
@@ -28,7 +29,7 @@ export function QNHLesson({ scene }: Props) {
     return (
         <PageLayout>
             <>
-                { getUIForStep(currentStep!.id, onNextStep) }
+                { getUIForStep(currentStep!.id, scene, onNextStep) }
                 <div className='qnh-lesson'>
                     {
                         isShowingAltimeter(currentStep!.id) &&
@@ -63,19 +64,22 @@ export function QNHLesson({ scene }: Props) {
     )
 }
 
-function getUIForStep(step: QNHLessonStep, nextStep: () => void) {
+function getUIForStep(step: QNHLessonStep, scene: QNHScene, nextStep: () => void) {
     switch (step) {
         case QNHLessonStep.Title:   
-            return <QNHTitleCard nextStep={nextStep} />
+            return <QNHTitleCard scene={scene} nextStep={nextStep} />
         
         case QNHLessonStep.Introduction:   
-            return <QNHIntroduction nextStep={nextStep} />
+            return <QNHIntroduction scene={scene} nextStep={nextStep} />
 
         case QNHLessonStep.Altimeter:   
-            return <QNHAltimeter nextStep={nextStep} />
+            return <QNHAltimeter scene={scene} nextStep={nextStep} />
 
         case QNHLessonStep.PressureAltitude:
-            return <QNHPressureAltitude nextStep={nextStep} />
+            return <QNHPressureAltitude scene={scene} nextStep={nextStep} />
+
+        case QNHLessonStep.ChangingPressure:
+            return <QNHChangingPressure scene={scene} nextStep={nextStep} />
     }
 }
 

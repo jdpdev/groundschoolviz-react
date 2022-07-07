@@ -57,5 +57,6 @@ export class LessonStep<T> {
 }
 
 export interface LessonDialogProps {
-    nextStep: () => void
+    nextStep: () => void,
+    scene: QNHScene
 }
