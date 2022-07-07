@@ -5,7 +5,8 @@ import { LessonScript, LessonStep } from "./LessonScript";
 export enum QNHLessonStep {
     Title,
     Introduction,
-    Altimeter
+    Altimeter,
+    PressureAltitude
 }
 
 export class QNHLessonScript extends LessonScript<QNHLessonStep> {
@@ -15,7 +16,8 @@ export class QNHLessonScript extends LessonScript<QNHLessonStep> {
         const steps = [
             new QNHTitleStep(scene),
             new QNHIntroductionStep(scene),
-            new QNHAltimeterStep(scene)
+            new QNHAltimeterStep(scene),
+            new QNHPressureAltitudeStep(scene)
         ]
 
         this.addSteps(steps)
@@ -38,5 +40,15 @@ export class QNHIntroductionStep extends LessonStep<QNHLessonStep> {
 export class QNHAltimeterStep extends LessonStep<QNHLessonStep> { 
     constructor(scene: QNHScene) {
         super(QNHLessonStep.Altimeter, scene)
+    }
+}
+
+export class QNHPressureAltitudeStep extends LessonStep<QNHLessonStep> { 
+    constructor(scene: QNHScene) {
+        super(QNHLessonStep.PressureAltitude, scene)
+    }
+
+    public async activate() {
+        this._scene.toggleIsobars()
     }
 }

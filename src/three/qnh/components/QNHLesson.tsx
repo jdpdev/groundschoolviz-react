@@ -7,6 +7,7 @@ import { Altimeter } from './Altimeter'
 import './css/QNHLesson.css'
 import { QNHIntroduction } from './Introduction'
 import { QNHAltimeter } from './QNHAltimeter'
+import { QNHPressureAltitude } from './QNHPressureAltitude'
 import { QNHTitleCard } from './TitleCard'
 
 interface Props {
@@ -72,6 +73,9 @@ function getUIForStep(step: QNHLessonStep, nextStep: () => void) {
 
         case QNHLessonStep.Altimeter:   
             return <QNHAltimeter nextStep={nextStep} />
+
+        case QNHLessonStep.PressureAltitude:
+            return <QNHPressureAltitude nextStep={nextStep} />
     }
 }
 

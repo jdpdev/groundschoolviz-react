@@ -43,27 +43,28 @@ export function PageLayout(props: Props) {
 
 interface SlotProps {
     children?: ReactElement | ReactElement[]
+    show?: boolean
 }
 
-export function PageLayoutTopSlot({ children }: SlotProps) {
+export function PageLayoutTopSlot({ children, show }: SlotProps) {
     return (
         <div className='slot-top'>
-            { children }
+            { show !== false && children }
         </div>
     )
 }
 
-export function PageLayoutBottomSlot({ children }: SlotProps) {
+export function PageLayoutBottomSlot({ children, show }: SlotProps) {
     return (
         <div className='slot-bottom'>
-            { children }
+            { show !== false && children }
         </div>
     )
 }
 
-export function PageLayoutModalSlot({ children }: SlotProps) {
+export function PageLayoutModalSlot({ children, show }: SlotProps) {
     return (
-        <Modal show={children != null}>
+        <Modal show={show !== false}>
             { children }
         </Modal>
     )
