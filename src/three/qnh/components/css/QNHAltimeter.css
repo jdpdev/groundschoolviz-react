@@ -2,15 +2,42 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: center;
     gap: 1em;
 }
 
 .altimeter-container {
+    
+}
 
+.altitude-label, .setting-label {
+    font-weight: bold;
+    font-size: 1.1em;
+    position: relative;
+}
+
+.altitude-label {
+    right: 1em;
+    margin-bottom: 0.5em;
+}
+
+.setting-label {
+    margin-top: 0.5em;
+}
+
+.right-container {
+    flex: 0 0 200px;
+
+    display: flex;
+    gap: 1em;
 }
 
 .setting-buttons {
     display: flex;
+    flex-direction: column;
     gap: 1em;
+}
+
+.setting-buttons button {
+    width: 3em;
 }

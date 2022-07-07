@@ -3,23 +3,28 @@
     height: 100%;
 }
 
-.slot-top {
+.slot-top, .slot-bottom {
     position: absolute;
-    top: 1em;
     left: 25%;
     width: 50%;
+    min-height: 20%;
+}
+
+.slot-top {
+    top: 1em;
+    display: flex;
+    align-items: center;
 }
 
 .slot-bottom {
-    position: absolute;
     bottom: 1em;
-    left: 25%;
-    width: 50%;
+    align-items: center;
 }
 
 @media screen and (max-width: 768px) {
     .slot-top, .slot-bottom {
-        left: 12.5%;
-        width: 75%;
+        left: 5%;
+        width: 90%;
+        min-height: 12%;
     }
 }
