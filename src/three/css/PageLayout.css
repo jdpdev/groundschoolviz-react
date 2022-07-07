@@ -5,14 +5,21 @@
 
 .slot-top {
     position: absolute;
-    top: 0;
+    top: 1em;
     left: 25%;
     width: 50%;
 }
 
 .slot-bottom {
     position: absolute;
-    bottom: 0;
+    bottom: 1em;
     left: 25%;
     width: 50%;
+}
+
+@media screen and (max-width: 768px) {
+    .slot-top, .slot-bottom {
+        left: 12.5%;
+        width: 75%;
+    }
 }

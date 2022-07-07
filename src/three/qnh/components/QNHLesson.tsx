@@ -6,6 +6,7 @@ import { Altimeter } from './Altimeter'
 
 import './css/QNHLesson.css'
 import { QNHIntroduction } from './Introduction'
+import { QNHAltimeter } from './QNHAltimeter'
 import { QNHTitleCard } from './TitleCard'
 
 interface Props {
@@ -28,26 +29,33 @@ export function QNHLesson({ scene }: Props) {
             <>
                 { getUIForStep(currentStep!.id, onNextStep) }
                 <div className='qnh-lesson'>
-                    <Altimeter
-                        setting={scene.altimeterSetting}
-                        altitude={scene.altitude}
-                    />
-                    <div className='pressure-controls'>
-                        <h4>Pressure</h4>
-                        <div>
-                            <button onClick={() => scene.highPressure()}>
-                                High
-                            </button>
-
-                            <button onClick={() => scene.normalPressure()}>
-                                Starting
-                            </button>
-
-                            <button onClick={() => scene.lowPressure()}>
-                                Low
-                            </button>
+                    {
+                        isShowingAltimeter(currentStep!.id) &&
+                        <div className='altimeter-box'>
+                            <Altimeter
+                                setting={scene.altimeterSetting}
+                                altitude={scene.altitude}
+                            />
                         </div>
-                    </div>
+                    }
+                    {/*
+                        <div className='pressure-controls'>
+                            <h4>Pressure</h4>
+                            <div>
+                                <button onClick={() => scene.highPressure()}>
+                                    High
+                                </button>
+
+                                <button onClick={() => scene.normalPressure()}>
+                                    Starting
+                                </button>
+
+                                <button onClick={() => scene.lowPressure()}>
+                                    Low
+                                </button>
+                            </div>
+                        </div>
+                    */ }
                 </div>
             </>
         </PageLayout>
@@ -61,5 +69,12 @@ function getUIForStep(step: QNHLessonStep, nextStep: () => void) {
         
         case QNHLessonStep.Introduction:   
             return <QNHIntroduction nextStep={nextStep} />
+
+        case QNHLessonStep.Altimeter:   
+            return <QNHAltimeter nextStep={nextStep} />
     }
+}
+
+function isShowingAltimeter(step: QNHLessonStep): boolean {
+    return step > QNHLessonStep.Altimeter
 }

@@ -1,0 +1,16 @@
+.altimeter-demo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1em;
+}
+
+.altimeter-container {
+
+}
+
+.setting-buttons {
+    display: flex;
+    gap: 1em;
+}

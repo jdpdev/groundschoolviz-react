@@ -42,7 +42,7 @@ export function PageLayout(props: Props) {
 }
 
 interface SlotProps {
-    children?: ReactElement
+    children?: ReactElement | ReactElement[]
 }
 
 export function PageLayoutTopSlot({ children }: SlotProps) {

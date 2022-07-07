@@ -64,7 +64,7 @@ export class QNHScene extends Scene {
 
         this._isobarWall = new Object3D()
         this._isobarWall.position.set(0, 0, 0)
-        this.add(this._isobarWall)
+        //this.add(this._isobarWall)
 
         this._sideIsobars = [
             new SideIsobar(this._qnh, 23),
@@ -159,5 +159,9 @@ export class QNHScene extends Scene {
 
     public lowPressure() {
         this._qnh.moveToPressure(QNHSetting.LOW_PRESSURE, () => {})
+    }
+
+    public toggleIsobars() {
+        this.add(this._isobarWall)
     }
 }

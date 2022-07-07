@@ -1,14 +1,27 @@
 import React from 'react'
+import { Button } from '../../../ui/Button'
+import { ControlBar } from '../../../ui/ControlBar'
 import { DialogBox } from '../../../ui/DialogBox'
 import { LessonDialogProps } from '../../LessonScript'
-import { PageLayoutTopSlot } from '../../PageLayout'
+import { PageLayoutBottomSlot } from '../../PageLayout'
 
 export function QNHIntroduction(props: LessonDialogProps) {
     return (
-        <PageLayoutTopSlot>
+        <PageLayoutBottomSlot>
             <DialogBox>
-                Let's talk about altimeter settings
+                <div>
+                    <p>
+                        Knowing your altitude while flying is important.
+                    </p>
+                    <p>
+                        The altimeter is the instrument we use to find the altitude.
+                    </p>
+                </div>
+
+                <ControlBar>
+                    <Button onClick={props.nextStep}>Okay</Button>
+                </ControlBar>
             </DialogBox>
-        </PageLayoutTopSlot>
+        </PageLayoutBottomSlot>
     )
 }

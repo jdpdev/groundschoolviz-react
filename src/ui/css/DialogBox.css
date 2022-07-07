@@ -1,7 +1,14 @@
 .dialog-box {
-    padding: 1em;
+    padding: 0.5em 1em;
     border-radius: 8px;
 
     background-color: #333;
-    color: rgba(255, 255, 255, 0.8)
+    color: rgba(255, 255, 255, 0.8);
+
+    display: flex;
+    align-items: center;
+}
+
+.dialog-box > div {
+    flex: 1 1 auto;
 }
