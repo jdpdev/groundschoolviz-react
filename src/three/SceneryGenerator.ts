@@ -53,7 +53,7 @@ export class SceneryGenerator extends Object3D {
 
             // top
             for (let i = 0; i < 10; i++) {
-                const tree = this.instantiateTree(randFloat(-0.75, 0.75))
+                const tree = this.instantiateTree(randFloat(-0.95, 0.95))
                     
                 if (tree) {
                     tree.rotation.set(PI2, 0, 0)
@@ -61,14 +61,14 @@ export class SceneryGenerator extends Object3D {
             }
 
             // bottom
-            for (let i = 0; i < 10; i++) {
+            /*for (let i = 0; i < 10; i++) {
                 const tree = this.instantiateTree(randFloat(-0.75, 0.75))
 
                 if (tree) {
                     tree.rotation.set(PI2, PI32, 0)
                     tree.position.y = -0.1
                 }
-            }
+            }*/
 
             performance.mark(marker)
         })
@@ -79,7 +79,7 @@ export class SceneryGenerator extends Object3D {
 
         if (mesh) {
             mesh.position.x = x
-            mesh.position.z = randFloat(-0.95, 0.95)
+            mesh.position.z = randFloat(-0.9, 0.9)
             mesh.position.y = 0
 
             //mesh.rotateZ(PI2 * Math.random())
@@ -103,23 +103,14 @@ export class SceneryGenerator extends Object3D {
         for (let i = 0; i < this._aliveTrees.length; i++) {
             t = this._aliveTrees[i]
 
-            if (t.position.y < 0) {
-                t.position.x += step
+            t.position.x -= step
 
-                if (t.position.x > 1) {
-                    t.position.y = 0
-                    t.position.x = 1
-                }
-            } else {
-                t.position.x -= step
-
-                if (t.position.x < -1) {
-                    t.position.y = -0.05
-                    t.position.x = -1
-                }
+            if (t.position.x < -this._radius) {
+                t.position.x = this._radius
+                t.position.z = randFloat(-0.9, 0.9)
             }
 
-            if (t.position.x < -0.9) {
+            /*if (t.position.x < -0.9) {
                 const d = (t.position.x + 0.9) / -0.1
 
                 t.rotation.y = t.position.y < 0 
@@ -131,7 +122,7 @@ export class SceneryGenerator extends Object3D {
                 t.rotation.y = t.position.y < 0 
                     ? lerp(Math.PI, PI32, d) 
                     : lerp(Math.PI * 2, PI32, d)
-            }
+            }*/
         }
 
         /*this._aliveTrees.forEach(t => {
