@@ -1,7 +1,7 @@
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Button } from '../../../ui/Button'
+import { Button, OutlineButton } from '../../../ui/Button'
 import { ControlBar } from '../../../ui/ControlBar'
 import { DialogBox } from '../../../ui/DialogBox'
 import { LessonDialogProps } from '../../LessonScript'
@@ -11,19 +11,28 @@ import { Altimeter } from './Altimeter'
 import './css/QNHAltimeter.css'
 
 export function QNHAltimeter(props: LessonDialogProps) {
+    const [step, setStep] = useState(0)
     const [setting, setSetting] = useState(29.92)
     const altitude = (setting - 28) / 4
+
+    const onNext = () => {
+        if (step === 0) {
+            setStep(1)
+        } else {
+            props.nextStep()
+        }
+    }
 
     return (
         <>
             <PageLayoutTopSlot>
                 <DialogBox>
-                    <div>
-                        The altimeter is a <b>barometer</b> that compares the current pressure with the set <b>altimeter setting</b> to derive your height above sea level.
-                    </div>
+                    {step === 0 && <div>The altimeter is a <b>barometer</b> that compares the current pressure with the set <b>altimeter setting</b> to derive your height above sea level.</div>}
+                    {step === 1 && <div>Changing the setting while in level flight will indicate a change in altitude.</div>}
 
                     <ControlBar>
-                        <Button onClick={props.nextStep}>Roger</Button>
+                        {step === 0 && <OutlineButton onClick={onNext}>More</OutlineButton>}
+                        {step === 1 && <Button onClick={onNext}>Roger</Button>}
                     </ControlBar>
                 </DialogBox>
             </PageLayoutTopSlot>

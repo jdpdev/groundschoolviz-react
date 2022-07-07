@@ -19,4 +19,16 @@ export function Button(props: ButtonProps) {
     )
 }
 
+export function OutlineButton(props: ButtonProps) {
+    const classes = classNames(props.className, 'outline-button')
+    return (
+        <button
+            {...props}
+            className={classes}
+        >
+            { props.children }
+        </button>
+    )
+}
+
 // bright color: #ffc800
