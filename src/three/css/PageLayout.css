@@ -3,6 +3,10 @@
     height: 100%;
 }
 
+.base-content {
+    
+}
+
 .slot-top, .slot-bottom {
     position: absolute;
     left: 25%;
@@ -22,6 +26,12 @@
     display: flex;
     align-items: flex-start;
     justify-content: center;
+}
+
+.slot-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
 }
 
 @media screen and (max-width: 768px) {

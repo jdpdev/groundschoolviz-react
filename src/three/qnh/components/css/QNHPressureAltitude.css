@@ -1,0 +1,18 @@
+.isobar-pointers {
+    font-weight: bold;
+    position: relative;
+}
+
+.isobar-pointers .isobar {
+    position: absolute;
+    right: 265px;
+    bottom: 115px;
+    width: 100px;
+}
+
+.isobar-pointers .airplane {
+    position: absolute; 
+    width: 150px;
+    right: 275px;
+    bottom: 165px;
+}

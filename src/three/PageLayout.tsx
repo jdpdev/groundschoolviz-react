@@ -69,3 +69,11 @@ export function PageLayoutModalSlot({ children, show }: SlotProps) {
         </Modal>
     )
 }
+
+export function PageLayoutOverlay({ children, show }: SlotProps) {
+    return (
+        <div className='slot-overlay'>
+            { show !== false && children }
+        </div>
+    )
+}

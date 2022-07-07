@@ -1,9 +1,13 @@
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react'
 import { Button, OutlineButton } from '../../../ui/Button';
 import { ControlBar } from '../../../ui/ControlBar';
 import { DialogBox } from '../../../ui/DialogBox';
 import { LessonDialogProps } from '../../LessonScript';
-import { PageLayoutBottomSlot, PageLayoutTopSlot } from '../../PageLayout';
+import { PageLayoutBottomSlot, PageLayoutOverlay, PageLayoutTopSlot } from '../../PageLayout';
+
+import './css/QNHPressureAltitude.css'
 
 export function QNHPressureAltitude(props: LessonDialogProps) {
     const [step, setStep] = useState(0)
@@ -34,6 +38,12 @@ export function QNHPressureAltitude(props: LessonDialogProps) {
                     </ControlBar>
                 </DialogBox>
             </PageLayoutBottomSlot>
+            <PageLayoutOverlay show={step === 0}>
+                <div className='isobar-pointers'>
+                    <div className='isobar'>Isobar <FontAwesomeIcon icon={faArrowRight} /></div>
+                    <div className='airplane'>Your Altitude <FontAwesomeIcon icon={faArrowRight} /></div>
+                </div>
+            </PageLayoutOverlay>
             <PageLayoutTopSlot show={step === 1}>
                 <DialogBox>
                     <div>
