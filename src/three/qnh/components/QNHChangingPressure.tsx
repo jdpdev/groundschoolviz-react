@@ -10,10 +10,7 @@ export function QNHChangingPressure(props: LessonDialogProps) {
     const {scene} = props
     const {goNext, gotoStep, index} = useInternalStep(5, props.nextStep)
 
-    console.log('[QHNChangingPressure]', index)
-
     const finishHighPressure = useCallback(() => {
-        console.log('[finishHighPressure]')
         gotoStep(2)
     }, [goNext, index])
 
@@ -63,6 +60,7 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     <Button onClick={() => scene.highPressure()}>High Pressure</Button>
                     <Button onClick={() => scene.normalPressure()}>Starting Pressure</Button>
                     <Button onClick={() => scene.lowPressure()}>Low Pressure</Button>
+                    <OutlineButton onClick={() => props.nextStep()}>Continue</OutlineButton>
                 </ControlBar>
             </PageLayoutBottomSlot>
         </>

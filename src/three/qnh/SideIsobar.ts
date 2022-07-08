@@ -28,7 +28,7 @@ export class SideIsobar extends Object3D {
         this.add(line)
 
         this.position.y = this.getHeight()
-        this.position.z = -1
+        this.position.z = -1 + this.zOffset
     }
 
     public tick(delta: number) {
@@ -45,5 +45,9 @@ export class SideIsobar extends Object3D {
 
     protected get lineWidth(): number {
         return 0.002
+    }
+
+    protected get zOffset(): number {
+        return 0
     }
 }

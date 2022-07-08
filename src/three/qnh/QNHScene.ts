@@ -14,6 +14,7 @@ import { SideIsobar } from "./SideIsobar";
 import { LessonScript } from "../LessonScript";
 import { QNHLessonScript } from "../QNHLessonScript";
 import { AirplaneIsobar } from "./AirplaneIsobar";
+import { ConstantIsobar } from "./ConstantIsobar";
 
 export class QNHScene extends Scene {
     private _camera!: PerspectiveCamera;
@@ -33,6 +34,7 @@ export class QNHScene extends Scene {
     private _isobarWall: Object3D
     private _sideIsobars: SideIsobar[]
     private _airplaneIsobar: AirplaneIsobar
+    private _constantIsobar: ConstantIsobar
 
     public get altimeterSetting() {
         return this._qnh.setting
@@ -70,6 +72,8 @@ export class QNHScene extends Scene {
 
         this._airplaneIsobar = new AirplaneIsobar(this._qnh, this._airplane)
         this._isobarWall.add(this._airplaneIsobar)
+
+        this._constantIsobar = new ConstantIsobar(this._qnh, this._qnh.currentAltitude)
 
         this._sideIsobars = [
             new SideIsobar(this._qnh, 23),
@@ -146,6 +150,7 @@ export class QNHScene extends Scene {
         this._scenery.tick(delta)
         this._sideIsobars.forEach(si => si.tick(delta))
         this._airplaneIsobar.tick(delta)
+        this._constantIsobar.tick(delta)
 
         this._airplane.tick(time, delta)
         this._airplane.position.y = this._qnh.currentAltitude
@@ -158,7 +163,6 @@ export class QNHScene extends Scene {
     public async highPressure() {
         return new Promise<void>((resolve, reject) => {
             this._qnh.moveToPressure(QNHSetting.HIGH_PRESSURE, () => {
-                console.log('[highPressure] done')
                 resolve()
             })
         })
@@ -177,6 +181,7 @@ export class QNHScene extends Scene {
     }
 
     public toggleIsobars() {
+        this.add(this._constantIsobar)
         this.add(this._isobarWall)
     }
 }
