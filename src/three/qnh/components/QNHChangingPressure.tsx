@@ -1,19 +1,21 @@
-import React from 'react'
-import { OutlineButton } from '../../../ui/Button';
+import React, { useCallback } from 'react'
+import { Button, OutlineButton } from '../../../ui/Button';
 import { ControlBar } from '../../../ui/ControlBar';
 import { DialogBox } from '../../../ui/DialogBox';
 import { LessonDialogProps } from '../../LessonScript';
-import { PageLayoutTopSlot } from '../../PageLayout';
+import { PageLayoutBottomSlot, PageLayoutTopSlot } from '../../PageLayout';
 import { useInternalStep } from '../../useInternalStep';
 
 export function QNHChangingPressure(props: LessonDialogProps) {
     const {scene} = props
-    const {goNext, index} = useInternalStep(5, props.nextStep)
+    const {goNext, gotoStep, index} = useInternalStep(5, props.nextStep)
 
-    const finishHighPressure = () => {
+    console.log('[QHNChangingPressure]', index)
+
+    const finishHighPressure = useCallback(() => {
         console.log('[finishHighPressure]')
-        goNext()
-    }
+        gotoStep(2)
+    }, [goNext, index])
 
     return (
         <>
@@ -24,7 +26,7 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     </div>
                     <ControlBar>
                         <OutlineButton onClick={async () => {
-                            goNext()
+                            gotoStep(1)
                             scene.highPressure()
                                 .then(finishHighPressure)
                         }}>
@@ -40,15 +42,29 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     </div>
                     <ControlBar>
                         <OutlineButton onClick={async () => {
-                            goNext()
+                            gotoStep(3)
                             await scene.lowPressure()
-                            goNext()
+                            gotoStep(4)
                         }}>
                             Go Lower
                         </OutlineButton>
                     </ControlBar>
                 </DialogBox>
             </PageLayoutTopSlot>
+            <PageLayoutTopSlot show={index === 4}>
+                <DialogBox>
+                    <div>
+                        You can see how you can maintain a constant altitude according to the altimeter, even though your actual altitude can wildly vary if the altimeter setting is wrong.
+                    </div>
+                </DialogBox>
+            </PageLayoutTopSlot>
+            <PageLayoutBottomSlot show={index === 4}>
+                <ControlBar>
+                    <Button onClick={() => scene.highPressure()}>High Pressure</Button>
+                    <Button onClick={() => scene.normalPressure()}>Starting Pressure</Button>
+                    <Button onClick={() => scene.lowPressure()}>Low Pressure</Button>
+                </ControlBar>
+            </PageLayoutBottomSlot>
         </>
     )
 }
