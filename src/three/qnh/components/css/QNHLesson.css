@@ -4,6 +4,11 @@
     width: 100%;
 }
 
+.altimeter-box {
+    position: absolute;
+    right: 55%;
+}
+
 .pressure-controls {
     position: absolute;
     left: 55%;

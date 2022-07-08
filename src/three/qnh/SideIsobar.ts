@@ -8,7 +8,7 @@ export class SideIsobar extends Object3D {
     private _line: LineGeometry
     private _points: number[]
 
-    constructor(private _qnh: QNHSetting, private _pressure: number) {
+    constructor(protected _qnh: QNHSetting, private _pressure: number) {
         super()
 
         this._line = new LineGeometry()
@@ -20,18 +20,34 @@ export class SideIsobar extends Object3D {
         this._line.setPositions(this._points)
 
         const lineMaterial = new LineMaterial({ 
-            color: 0x00719d,
-            linewidth: 0.002
+            color: this.lineColor,
+            linewidth: this.lineWidth
         })
         const line = new Line2(this._line, lineMaterial)
 
         this.add(line)
 
-        this.position.y = this._qnh.getPressureAltitude(_pressure)
-        this.position.z = -1
+        this.position.y = this.getHeight()
+        this.position.z = -1 + this.zOffset
     }
 
     public tick(delta: number) {
-        this.position.y = this._qnh.getPressureAltitude(this._pressure)
+        this.position.y = this.getHeight()
+    }
+
+    protected getHeight() {
+        return this._qnh.getPressureAltitude(this._pressure)
+    }
+
+    protected get lineColor(): number {
+        return 0x00719d
+    }
+
+    protected get lineWidth(): number {
+        return 0.002
+    }
+
+    protected get zOffset(): number {
+        return 0
     }
 }
