@@ -1,0 +1,11 @@
+.isobar-pointers {
+    font-weight: bold;
+    position: relative;
+}
+
+.isobar-pointers .indicated {
+    position: absolute; 
+    width: 200px;
+    right: 200px;
+    bottom: 145px;
+}

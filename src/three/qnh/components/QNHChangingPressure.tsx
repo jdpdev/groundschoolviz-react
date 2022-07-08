@@ -1,10 +1,14 @@
+import { faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback } from 'react'
 import { Button, OutlineButton } from '../../../ui/Button';
 import { ControlBar } from '../../../ui/ControlBar';
 import { DialogBox } from '../../../ui/DialogBox';
 import { LessonDialogProps } from '../../LessonScript';
-import { PageLayoutBottomSlot, PageLayoutTopSlot } from '../../PageLayout';
+import { PageLayoutBottomSlot, PageLayoutOverlay, PageLayoutTopSlot } from '../../PageLayout';
 import { useInternalStep } from '../../useInternalStep';
+
+import './css/QNHChangingPressure.css'
 
 export function QNHChangingPressure(props: LessonDialogProps) {
     const {scene} = props
@@ -32,6 +36,11 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     </ControlBar>
                 </DialogBox>
             </PageLayoutTopSlot>
+            <PageLayoutOverlay show={index === 1 || index === 2}>
+                <div className='isobar-pointers'>
+                    <div className='indicated'>Indicated Altitude <FontAwesomeIcon icon={faArrowUp} /></div>
+                </div>
+            </PageLayoutOverlay>
             <PageLayoutTopSlot show={index === 2}>
                 <DialogBox>
                     <div>
