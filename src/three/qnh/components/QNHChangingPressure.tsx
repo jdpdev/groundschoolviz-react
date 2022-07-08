@@ -69,7 +69,7 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     <Button onClick={() => scene.highPressure()}>High Pressure</Button>
                     <Button onClick={() => scene.normalPressure()}>Starting Pressure</Button>
                     <Button onClick={() => scene.lowPressure()}>Low Pressure</Button>
-                    <OutlineButton onClick={() => props.nextStep()}>Continue</OutlineButton>
+                    { false && <OutlineButton onClick={() => props.nextStep()}>Continue</OutlineButton> }
                 </ControlBar>
             </PageLayoutBottomSlot>
         </>

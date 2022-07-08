@@ -31,7 +31,6 @@ function useThreeJSApp() {
 
     useEffect(() => {
         if (rendererRef.current != null) {
-            console.warn('trying to make a second renderer')
             return
         }
 
