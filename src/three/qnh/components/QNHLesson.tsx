@@ -1,4 +1,6 @@
 import React, { useRef, useState } from 'react'
+import { LessonScene } from '../../../LessonScene'
+import { ThreeComponent } from '../../../ThreeComponent'
 import { PageLayout } from '../../PageLayout'
 import { QNHLessonScript, QNHLessonStep } from '../../QNHLessonScript'
 import { QNHScene } from '../QNHScene'
@@ -12,13 +14,20 @@ import { QNHPressureAltitude } from './QNHPressureAltitude'
 import { QNHTitleCard } from './TitleCard'
 
 interface Props {
-    scene: QNHScene
+    scene: LessonScene
 }
 
-
+export function QNHLessonRoute() {
+    return (
+        <ThreeComponent sceneId={QNHScene.ID}>
+            { (scene) => <QNHLesson scene={scene} /> }
+        </ThreeComponent>
+    )
+}
 
 export function QNHLesson({ scene }: Props) {
-    const { current: lesson } = useRef(new QNHLessonScript(scene))
+    const myscene = scene as QNHScene
+    const { current: lesson } = useRef(new QNHLessonScript(myscene))
     const [currentStep, setCurrentStep] = useState(lesson.currentStep)
 
     const onNextStep = async () => {
@@ -29,35 +38,17 @@ export function QNHLesson({ scene }: Props) {
     return (
         <PageLayout>
             <>
-                { getUIForStep(currentStep!.id, scene, onNextStep) }
+                { getUIForStep(currentStep!.id, myscene, onNextStep) }
                 <div className='qnh-lesson'>
                     {
                         isShowingAltimeter(currentStep!.id) &&
                         <div className='altimeter-box'>
                             <Altimeter
-                                setting={scene.altimeterSetting}
-                                altitude={scene.altitude}
+                                setting={myscene.altimeterSetting}
+                                altitude={myscene.altitude}
                             />
                         </div>
                     }
-                    {/*
-                        <div className='pressure-controls'>
-                            <h4>Pressure</h4>
-                            <div>
-                                <button onClick={() => scene.highPressure()}>
-                                    High
-                                </button>
-
-                                <button onClick={() => scene.normalPressure()}>
-                                    Starting
-                                </button>
-
-                                <button onClick={() => scene.lowPressure()}>
-                                    Low
-                                </button>
-                            </div>
-                        </div>
-                    */ }
                 </div>
             </>
         </PageLayout>
