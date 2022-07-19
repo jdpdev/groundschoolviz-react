@@ -94,7 +94,7 @@ export class SceneryGenerator extends Object3D {
     }
 
     public tick(delta: number) {
-        const step = 0.25 * delta
+        const step = 0.15 * delta
         const diff = 0.1
         const edge = this._radius - 0.5
         const zone = edge - diff
