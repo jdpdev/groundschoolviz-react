@@ -15,12 +15,13 @@ import { LessonScript } from "../LessonScript";
 import { QNHLessonScript } from "../QNHLessonScript";
 import { AirplaneIsobar } from "./AirplaneIsobar";
 import { ConstantIsobar } from "./ConstantIsobar";
+import { LessonScene } from "../../LessonScene";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-export class QNHScene extends Scene {
-    private _camera!: PerspectiveCamera;
-    public get camera(): PerspectiveCamera {
-        return this._camera;
-    }
+export class QNHScene extends LessonScene {
+    public static ID = 'qnhscene'
+
+    private _controls: OrbitControls | null = null
 
     private _mainLight!: DirectionalLight
     private _ambientLight!: AmbientLight
@@ -44,8 +45,8 @@ export class QNHScene extends Scene {
         return 0.24601
     }
 
-    constructor(private _renderer: WebGLRenderer) {
-        super()
+    constructor(renderer: WebGLRenderer) {
+        super(renderer)
         this.background = new Color(0x00b7ff)
 
         this.setupCamera()
@@ -90,6 +91,17 @@ export class QNHScene extends Scene {
         this._sideIsobars.forEach(si => this._isobarWall.add(si))
     }
 
+    public mount() {
+        this._controls = new OrbitControls(this._camera, this._renderer.domElement)
+    }
+
+    public dismount() {
+        super.dismount()
+        this.parent?.remove(this)
+        this._controls?.dispose()
+        this._controls = null
+    }
+
     private setupCamera() {
         this._camera = new PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
         this._camera.position.x = -2.2
@@ -113,36 +125,6 @@ export class QNHScene extends Scene {
 
         this._ambientLight = new AmbientLight(0xb1e9ff, 0.3)
         this.add(this._ambientLight)
-    }
-
-    private setupEffects() {
-        //
-
-        const renderPass = new RenderPass( this, this._camera );
-        renderPass.clearColor = new Color( 0, 0, 0 );
-        renderPass.clearAlpha = 0;
-
-        //
-
-        const fxaaPass = new ShaderPass( FXAAShader );
-
-        const copyPass = new ShaderPass( CopyShader );
-
-        const composer1 = new EffectComposer( this._renderer );
-        composer1.addPass( renderPass );
-        composer1.addPass( copyPass );
-
-        //
-
-        const pixelRatio = this._renderer.getPixelRatio();
-        const container = document.body
-
-        fxaaPass.material.uniforms[ 'resolution' ].value.x = 1 / ( container!.offsetWidth * pixelRatio );
-        fxaaPass.material.uniforms[ 'resolution' ].value.y = 1 / ( container!.offsetHeight * pixelRatio );
-
-        const composer2 = new EffectComposer( this._renderer );
-        composer2.addPass( renderPass );
-        composer2.addPass( fxaaPass );
     }
 
     public tick(time: number, delta: number) {
