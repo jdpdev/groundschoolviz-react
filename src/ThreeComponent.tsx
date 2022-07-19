@@ -1,17 +1,27 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Clock, Color, PCFShadowMap, Renderer, WebGLRenderer } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { LessonScene } from './LessonScene'
 import { SceneManager } from './SceneManager'
 import { EmptyScene } from './three/EmptyScene'
 import { QNHScene } from './three/qnh/QNHScene'
 
 interface Props {
-    children: (scene: QNHScene) => JSX.Element
+    children: (scene: LessonScene) => JSX.Element
+    sceneId: string
 }
 
-export function ThreeComponent({ children }: Props) {
-    console.log('[ThreeComponent]')
-    const { scene } = useThreeJSApp()
+const sceneManager = new SceneManager(
+    {
+        [QNHScene.ID]: QNHScene,
+        [EmptyScene.ID]: EmptyScene
+    },
+    EmptyScene.ID
+)
+
+export function ThreeComponent({ children, sceneId }: Props) {
+    const { sceneManager } = useThreeJSApp(sceneId)
+    const scene = sceneManager?.currentScene
 
     return (
         <>
@@ -30,7 +40,7 @@ type ThreeProps = {
     clock?: Clock
 }
 
-function useThreeJSApp() {
+function useThreeJSApp(sceneId: string) {
     const [props, setProps] = useState<ThreeProps>({})
     const rendererRef = useRef<Renderer | null>(null)
 
@@ -43,15 +53,8 @@ function useThreeJSApp() {
             antialias: true
         })
         const _clock = new Clock()
-        const sceneManager = new SceneManager(
-            _renderer,
-            {
-                [QNHScene.ID]: QNHScene,
-                [EmptyScene.ID]: EmptyScene
-            },
-            EmptyScene.ID
-        )
-
+        
+        sceneManager.loadScene(_renderer, sceneId)
         _renderer.setSize(window.innerWidth, window.innerHeight)
         _renderer.shadowMap.enabled = true
         _renderer.shadowMap.type = PCFShadowMap
@@ -100,7 +103,7 @@ function useThreeJSApp() {
             window.removeEventListener('resize', onWindowResize)
             _renderer.dispose()
         }
-    }, [])
+    }, [sceneId])
 
     return props
 }

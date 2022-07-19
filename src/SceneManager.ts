@@ -12,7 +12,6 @@ export class SceneManager {
     private _lastFixedTick: number = 0
 
     public constructor(
-        private _renderer: WebGLRenderer,
         private _scenes: SceneList,
         private _emptySceneId: string
     ) { 
@@ -20,10 +19,10 @@ export class SceneManager {
             throw new Error('Must include the emptySceneId in the scene list')
         }
 
-        this.loadScene(_emptySceneId)
+        // this.loadScene(_emptySceneId)
     }
 
-    public loadScene(id: string) {
+    public loadScene(renderer: WebGLRenderer, id: string) {
         if (this._currentScene) {
             this._currentScene.dismount()
         }
@@ -31,10 +30,10 @@ export class SceneManager {
         const next = this.findScene(id)
 
         if (next != null) {
-            this._currentScene = new next(this._renderer)
+            this._currentScene = new next(renderer)
         } else {
             const empty = this.findScene(this._emptySceneId)
-            this._currentScene = new empty(this._renderer)
+            this._currentScene = new empty(renderer)
         }
 
         this._currentScene.mount()
