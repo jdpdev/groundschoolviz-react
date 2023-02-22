@@ -1,4 +1,4 @@
-# Non-qualified Aviation Demos
+# Unsanctioned Ground School
 
 Little demos about aviation topics disguised as experiments with three.js and React
 
