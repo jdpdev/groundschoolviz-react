@@ -5,10 +5,6 @@ import { EmptyScene } from '../EmptyScene'
 
 import './Menu.css'
 
-interface Props {
-
-}
-
 export function Menu() {
     return (
         <ThreeComponent sceneId={EmptyScene.ID}>

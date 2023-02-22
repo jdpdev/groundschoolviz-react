@@ -1,4 +1,4 @@
-import { Color, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { Color, PerspectiveCamera, WebGLRenderer } from "three";
 import { LessonScene } from "../LessonScene";
 
 export class EmptyScene extends LessonScene {

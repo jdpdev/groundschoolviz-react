@@ -1,4 +1,4 @@
-import { lerp, smoothstep } from "three/src/math/MathUtils"
+import { smoothstep } from "three/src/math/MathUtils"
 
 export class QNHSetting {
     static LOW_PRESSURE = 28
@@ -17,10 +17,6 @@ export class QNHSetting {
 
     public get currentAltitude() {
         return this.getPressureAltitude(26.34)
-    }
-
-    constructor() {
-
     }
 
     public tick(time: number, delta: number) {

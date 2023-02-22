@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Clock, Color, PCFShadowMap, Renderer, WebGLRenderer } from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
+import { Clock, PCFShadowMap, Renderer, WebGLRenderer } from 'three'
 import { LessonScene } from './LessonScene'
 import { SceneManager } from './SceneManager'
 import { EmptyScene } from './three/EmptyScene'

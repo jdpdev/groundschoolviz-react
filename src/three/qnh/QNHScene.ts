@@ -1,18 +1,10 @@
-import { AmbientLight, Camera, Color, DirectionalLight, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
+import { AmbientLight, Color, DirectionalLight, Object3D, PerspectiveCamera, WebGLRenderer } from "three";
 import { Airplane } from "../Airplane";
 import { GroundTile } from "../GroundTile";
 
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { CopyShader } from 'three/examples/jsm/shaders/CopyShader.js';
-import { FXAAShader } from 'three/examples/jsm/shaders/FXAAShader.js'
 import { QNHSetting } from "./QNHSetting";
-import { LiveIsobar } from "./LiveIsobar";
 import { SceneryGenerator } from "../SceneryGenerator";
 import { SideIsobar } from "./SideIsobar";
-import { LessonScript } from "../LessonScript";
-import { QNHLessonScript } from "../QNHLessonScript";
 import { AirplaneIsobar } from "./AirplaneIsobar";
 import { ConstantIsobar } from "./ConstantIsobar";
 import { LessonScene } from "../../LessonScene";
@@ -31,7 +23,6 @@ export class QNHScene extends LessonScene {
     private _scenery: SceneryGenerator
     private _qnh: QNHSetting
 
-    private _isobar: LiveIsobar
     private _isobarWall: Object3D
     private _sideIsobars: SideIsobar[]
     private _airplaneIsobar: AirplaneIsobar
@@ -54,7 +45,6 @@ export class QNHScene extends LessonScene {
         //this.setupEffects()
 
         this._qnh = new QNHSetting()
-        this._isobar = new LiveIsobar(this._qnh)
 
         this._airplane = new Airplane()
         this._airplane.position.y = this._qnh.currentAltitude

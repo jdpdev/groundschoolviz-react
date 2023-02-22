@@ -1,4 +1,4 @@
-import { faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback } from 'react'
 import { Button, OutlineButton } from '../../../ui/Button';
@@ -12,11 +12,11 @@ import './css/QNHChangingPressure.css'
 
 export function QNHChangingPressure(props: LessonDialogProps) {
     const {scene} = props
-    const {goNext, gotoStep, index} = useInternalStep(5, props.nextStep)
+    const {gotoStep, index} = useInternalStep(5, props.nextStep)
 
     const finishHighPressure = useCallback(() => {
         gotoStep(2)
-    }, [goNext, index])
+    }, [gotoStep])
 
     return (
         <>

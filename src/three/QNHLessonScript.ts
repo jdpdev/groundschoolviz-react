@@ -1,4 +1,3 @@
-import React from 'react'
 import { QNHScene } from "./qnh/QNHScene";
 import { LessonScript, LessonStep } from "./LessonScript";
 

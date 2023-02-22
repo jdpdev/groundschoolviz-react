@@ -1,4 +1,3 @@
-import React, { Component, ReactComponentElement, ReactElement } from "react";
 import { QNHScene } from "./qnh/QNHScene";
 
 export class LessonScript<T> {

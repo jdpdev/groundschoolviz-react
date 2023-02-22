@@ -3,11 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ThreeComponent } from './ThreeComponent';
-import { QNHLesson, QNHLessonRoute } from './three/qnh/components/QNHLesson';
-import { QNHScene } from './three/qnh/QNHScene';
-import { EmptyScene } from './three/EmptyScene';
+import { QNHLessonRoute } from './three/qnh/components/QNHLesson';
 import { Menu } from './three/menu/Menu';
 
 const root = ReactDOM.createRoot(

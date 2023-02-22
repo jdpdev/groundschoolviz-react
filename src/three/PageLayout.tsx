@@ -1,20 +1,13 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import { Modal } from '../ui/Modal'
 
 import './css/PageLayout.css'
-import { LessonDialogProps } from './LessonScript'
 
 export enum LayoutSlot {
     Top = 'layout-top',
     Bottom = 'layout-bottom',
     Modal = 'layout-modal'
 }
-
-type SetInLayoutType = (content: React.FC<LessonDialogProps>, slot: LayoutSlot) => void
-
-type RenderProp = (
-    setInLayout: SetInLayoutType
-) => React.FC<LessonDialogProps>
 
 export interface LayoutSlots {
     [LayoutSlot.Top]?: ReactElement,
