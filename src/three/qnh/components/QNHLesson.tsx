@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { LessonScene } from '../../../LessonScene'
 import { ThreeComponent } from '../../../ThreeComponent'
 import { PageLayout } from '../../PageLayout'
@@ -26,13 +27,19 @@ export function QNHLessonRoute() {
 }
 
 export function QNHLesson({ scene }: Props) {
+    const navigate = useNavigate()
     const myscene = scene as QNHScene
     const { current: lesson } = useRef(new QNHLessonScript(myscene))
     const [currentStep, setCurrentStep] = useState(lesson.currentStep)
 
     const onNextStep = async () => {
-        await lesson.next()
-        setCurrentStep(lesson.currentStep)
+        const isContinuing = await lesson.next()
+        
+        if (isContinuing) {
+            setCurrentStep(lesson.currentStep)
+        } else {
+            navigate('/')
+        }
     }
 
     return (

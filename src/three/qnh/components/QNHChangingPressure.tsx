@@ -12,7 +12,7 @@ import './css/QNHChangingPressure.css'
 
 export function QNHChangingPressure(props: LessonDialogProps) {
     const {scene} = props
-    const {gotoStep, index} = useInternalStep(5, props.nextStep)
+    const {goNext, gotoStep, index} = useInternalStep(5, props.nextStep)
 
     const finishHighPressure = useCallback(() => {
         gotoStep(2)
@@ -62,6 +62,9 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     <div>
                         You can see how you can maintain a constant altitude according to the altimeter, even though your actual altitude can wildly vary if the altimeter setting is wrong.
                     </div>
+                    <ControlBar>
+                        <Button onClick={() => props.nextStep()}>Exit</Button>
+                    </ControlBar>
                 </DialogBox>
             </PageLayoutTopSlot>
             <PageLayoutBottomSlot show={index === 4}>

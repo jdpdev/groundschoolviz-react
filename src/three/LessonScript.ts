@@ -27,7 +27,13 @@ export class LessonScript<T> {
     public async next() {
         await this._steps[this._stepIndex].deactivate()
         this._stepIndex++
-        await this._steps[this._stepIndex].activate()
+
+        if (this._stepIndex >= this._steps.length) {
+            return false
+        } else {
+            await this._steps[this._stepIndex].activate()
+            return true
+        }
     }
 }
 
