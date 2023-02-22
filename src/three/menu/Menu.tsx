@@ -25,7 +25,7 @@ function MenuContent() {
                 </p>
 
                 <p>
-                    <Link to='/vor'>TO/FROM the crazy house</Link>
+                    <Link to='/vor'>TO/FROM Grandma's House We Go</Link>
                     <span>Making sense of VORs</span>
                 </p>
             </div>
