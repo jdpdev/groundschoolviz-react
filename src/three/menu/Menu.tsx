@@ -23,6 +23,11 @@ function MenuContent() {
                     <Link to='/qnh'>What's the Deal with Altimeter Setting?</Link>
                     <span>Demonstrates the importance of keeping your altimeter setting up-to-date with local conditions.</span>
                 </p>
+
+                <p>
+                    <Link to='/vor'>TO/FROM the crazy house</Link>
+                    <span>Making sense of VORs</span>
+                </p>
             </div>
         </div>
     )
