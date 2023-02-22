@@ -1,12 +1,10 @@
-import { BoxGeometry, Material, Mesh, MeshLambertMaterial, Object3D, Vector3 } from "three"
+import { Object3D } from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader"
-import { lerp, randFloat, randInt } from "three/src/math/MathUtils"
-import { LinkedList } from "../LinkedList"
+import { randFloat } from "three/src/math/MathUtils"
 
 const marker = 'scenery-measure'
 
 const PI2 = Math.PI / 2
-const PI32 = Math.PI + PI2
 
 export class SceneryGenerator extends Object3D {
     private _treeMeshes: Object3D[] = []
@@ -15,16 +13,11 @@ export class SceneryGenerator extends Object3D {
 
     constructor(private _radius: number) {
         super()
-
-        //this._treePool = new LinkedList<Object3D>()
-        //this._aliveTrees = new LinkedList<Object3D>()
-
         this.loadTreeMeshes()
     }
 
     private loadTreeMeshes() {
         const loader = new GLTFLoader()
-        const material = new MeshLambertMaterial({})
 
         loader.load('assets/models/trees.glb', ( gltf ) => {
             const meshes: Object3D[] = []
@@ -45,7 +38,7 @@ export class SceneryGenerator extends Object3D {
             this._treeMeshes = meshes
 
             for (let i = 0; i < 20; i++) {
-                const index = 0 //randInt(0, this._trees.length - 1)
+                const index = 0
                 const mesh = this._treeMeshes[index].clone()
 
                 this._treePool.push(mesh)
@@ -59,16 +52,6 @@ export class SceneryGenerator extends Object3D {
                     tree.rotation.set(PI2, 0, 0)
                 }
             }
-
-            // bottom
-            /*for (let i = 0; i < 10; i++) {
-                const tree = this.instantiateTree(randFloat(-0.75, 0.75))
-
-                if (tree) {
-                    tree.rotation.set(PI2, PI32, 0)
-                    tree.position.y = -0.1
-                }
-            }*/
 
             performance.mark(marker)
         })
@@ -95,13 +78,9 @@ export class SceneryGenerator extends Object3D {
 
     public tick(delta: number) {
         const step = 0.15 * delta
-        const diff = 0.1
-        const edge = this._radius - 0.5
-        const zone = edge - diff
 
-        let t: Object3D
         for (let i = 0; i < this._aliveTrees.length; i++) {
-            t = this._aliveTrees[i]
+            const t = this._aliveTrees[i]
 
             t.position.x -= step
 
@@ -109,35 +88,6 @@ export class SceneryGenerator extends Object3D {
                 t.position.x = this._radius
                 t.position.z = randFloat(-0.9, 0.9)
             }
-
-            /*if (t.position.x < -0.9) {
-                const d = (t.position.x + 0.9) / -0.1
-
-                t.rotation.y = t.position.y < 0 
-                    ? lerp(Math.PI, PI2, d) 
-                    : lerp(0, PI2, d)
-            } else if (t.position.x > 0.9) {
-                const d = (t.position.x - 0.9) / 0.1
-
-                t.rotation.y = t.position.y < 0 
-                    ? lerp(Math.PI, PI32, d) 
-                    : lerp(Math.PI * 2, PI32, d)
-            }*/
         }
-
-        /*this._aliveTrees.forEach(t => {
-            t.position.x -= step
-
-            if (t.position.x < -1) {
-                t.position.x = 1
-                //this._aliveTrees.splice(t)
-                //this._treePool.push(t)
-                //this.remove(t)
-            }
-        })*/
-
-        /*if (Math.random() > 0.9925) {
-            this.instantiateTree()
-        }*/
     }
 }

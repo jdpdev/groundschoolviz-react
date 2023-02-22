@@ -1,6 +1,6 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, OutlineButton } from '../../../ui/Button';
 import { ControlBar } from '../../../ui/ControlBar';
 import { DialogBox } from '../../../ui/DialogBox';

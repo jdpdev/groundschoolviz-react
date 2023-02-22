@@ -1,4 +1,4 @@
-import { faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useCallback } from 'react'
 import { Button, OutlineButton } from '../../../ui/Button';
@@ -16,7 +16,7 @@ export function QNHChangingPressure(props: LessonDialogProps) {
 
     const finishHighPressure = useCallback(() => {
         gotoStep(2)
-    }, [goNext, index])
+    }, [gotoStep])
 
     return (
         <>
@@ -62,6 +62,9 @@ export function QNHChangingPressure(props: LessonDialogProps) {
                     <div>
                         You can see how you can maintain a constant altitude according to the altimeter, even though your actual altitude can wildly vary if the altimeter setting is wrong.
                     </div>
+                    <ControlBar>
+                        <Button onClick={() => props.nextStep()}>Exit</Button>
+                    </ControlBar>
                 </DialogBox>
             </PageLayoutTopSlot>
             <PageLayoutBottomSlot show={index === 4}>

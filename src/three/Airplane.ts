@@ -1,4 +1,4 @@
-import { BoxGeometry, Material, Mesh, MeshLambertMaterial, Object3D } from "three";
+import { Material, MeshLambertMaterial, Object3D } from "three";
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 export class Airplane extends Object3D {

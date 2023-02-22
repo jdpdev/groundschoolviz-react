@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
 export function useInternalStep(count: number, onDone: () => void) {
     const [step, setStep] = useState(0)
@@ -8,7 +8,7 @@ export function useInternalStep(count: number, onDone: () => void) {
         } else {
             onDone()
         }
-    }, [step, setStep, onDone])
+    }, [step, setStep, onDone, count])
 
     const gotoStep = (step: number) => setStep(step)
 
